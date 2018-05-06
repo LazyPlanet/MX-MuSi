@@ -2230,14 +2230,25 @@ bool Player::CheckBaoHu(const Asset::PaiElement& pai/*宝牌数据*/)
 	
 	const auto& baopai = _game->GetBaoPai();
 
-	if (pai.card_type() != baopai.card_type() || pai.card_value() != baopai.card_value()) 
-	{
-		if (!_room->HasJiaBao()) return false; //是否支持假宝
+	//
+	//宝牌有多种定义形式：
+	//
+	//1.真正的宝牌；
+	//
+	//2.假宝：牌值一样；
+	//
+	//3.红中特殊宝牌
+	//
+	bool is_baopai = false; //是否是宝牌
 
-		if (pai.card_type() == Asset::CARD_TYPE_JIAN && pai.card_type() == Asset::CARD_TYPE_FENG) return false; //风牌、箭牌不能是假宝
-			
-		if (pai.card_value() != baopai.card_value()) return false; //不是假宝
-	}
+	if (pai.card_type() == baopai.card_type() && pai.card_value() == baopai.card_value()) is_baopai = true; //直接是宝牌
+	
+	if (!is_baopai && _room->HasJiaBao() && (pai.card_type() == Asset::CARD_TYPE_WANZI || pai.card_type() == Asset::CARD_TYPE_BINGZI || 
+				pai.card_type() == Asset::CARD_TYPE_TIAOZI)) is_baopai = true;  //支持假宝
+
+	if (!is_baopai && _room->HasManTianFei() && GameInstance.IsHongZhong(pai)) is_baopai = true;
+
+	if (!is_baopai) return false;
 
 	if (_cards_hu.size() == 0) return false; //尚不能胡牌
 
@@ -4541,7 +4552,7 @@ bool Player::LookAtBaopai(bool has_saizi)
 	
 	_baopai = baopai; //设置宝牌
 
-	if (CheckHuPai(baopai, false, false)) 
+	if (CheckHuPai(baopai, false, false) && _room->HasDuiBao()/*对宝*/) 
 	{
 		Jinbao(); //进宝
 

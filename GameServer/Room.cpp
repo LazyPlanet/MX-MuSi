@@ -469,6 +469,17 @@ bool Room::HasLaw(Asset::ROOM_EXTEND_TYPE type)
 		return true; //朝阳支持
 	}
 
+	if (city_type == Asset::CITY_TYPE_CHAOYANG && type == Asset::ROOM_EXTEND_TYPE_DUIBAO)
+	{
+		return true; //朝阳支持进宝
+	}
+	
+	if ((city_type == Asset::CITY_TYPE_CHAOYANG || city_type == Asset::CITY_TYPE_JIANPING || city_type == Asset::CITY_TYPE_YINGKOU) && 
+			type == Asset::ROOM_EXTEND_TYPE_GANGJIAFEN)
+	{
+		return true; //朝阳、营口、建平支持杠分
+	}
+
 	if (city_type == Asset::CITY_TYPE_JIANPING && type == Asset::ROOM_EXTEND_TYPE_JIAHU)
 	{
 		return true; //建平支持
@@ -626,9 +637,9 @@ bool Room::HasManTianFei()
 	return HasLaw(Asset::ROOM_EXTEND_TYPE_MANTIANFEI);
 }
 
-bool Room::HasGangPai()
+bool Room::HasGangJiaFen()
 {
-	return HasLaw(Asset::ROOM_EXTEND_TYPE_DAIGANG);
+	return HasLaw(Asset::ROOM_EXTEND_TYPE_GANGJIAFEN);
 }
 
 bool Room::HasKaiPaiZha()

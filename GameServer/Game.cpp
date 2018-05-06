@@ -1513,6 +1513,10 @@ bool Game::CheckLiuJu()
 
 void Game::CalculateGangScore(Asset::GameCalculate& game_calculate)
 {
+	if (!_room) return;
+
+	if (!_room->HasGangJiaFen()) return; //不带杠分
+
 	for (int i = 0; i < MAX_PLAYER_COUNT; ++i)
 	{
 		auto player = _players[i];
@@ -1881,6 +1885,11 @@ bool GameManager::IsYaoJiu(const Asset::PaiElement& pai)
 			pai.card_type() == Asset::CARD_TYPE_FENG || pai.card_type() == Asset::CARD_TYPE_JIAN) return true;
 
 	return false;
+}
+
+bool GameManager::IsHongZhong(const Asset::PaiElement& pai)
+{
+	return pai.card_type() == Asset::CARD_TYPE_JIAN && pai.card_value() == 1;
 }
 
 }

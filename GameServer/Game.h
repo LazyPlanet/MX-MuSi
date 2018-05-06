@@ -184,7 +184,8 @@ public:
 	
 	void OnCreateGame(std::shared_ptr<Game> game);
 
-	bool IsYaoJiu(const Asset::PaiElement& pai);
+	bool IsYaoJiu(const Asset::PaiElement& pai); //是否是幺九
+	bool IsHongZhong(const Asset::PaiElement& pai); //是否是红中
 };
 
 #define GameInstance GameManager::Instance()
