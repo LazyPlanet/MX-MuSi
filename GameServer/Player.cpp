@@ -4398,7 +4398,7 @@ int32_t Player::OnFaPai(std::vector<int32_t>& cards)
 			if (!_room->HasHuiPai()) //带会儿牌，产生会儿牌之后进行判断
 			{
 				Asset::PaiOperationAlert alert; //提示协议
-				if (OnFaPaiCheck(alert)) SendProtocol(alert);
+				if (OnFaPaiCheck(alert, Asset::PAI_OPER_TYPE_FAPAI)) SendProtocol(alert);
 			}
 		}
 	}
@@ -4471,7 +4471,10 @@ bool Player::OnFaPaiCheck(Asset::PaiOperationAlert& alert, Asset::PAI_OPER_TYPE 
 	//是否可以胡牌
 	//
 	//不能进行如，碰完之后可以胡牌的情况，因为尚未抓牌
+	//
 	static std::set<int32_t> _invalid_opers = { Asset::PAI_OPER_TYPE_CHIPAI, Asset::PAI_OPER_TYPE_PENGPAI, Asset::PAI_OPER_TYPE_XUANFENG_JIAN };
+
+	if (_room->HasKaiPaiZha()) _invalid_opers.emplace(Asset::PAI_OPER_TYPE_FAPAI); //是否支持开牌炸
 
 	if (_invalid_opers.find(oper_reason) == _invalid_opers.end() && ((ShouldDaPai() && CheckZiMo(false)) || CheckBaoHu(_zhuapai)))
 	{
