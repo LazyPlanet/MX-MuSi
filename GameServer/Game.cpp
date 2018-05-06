@@ -1840,6 +1840,8 @@ int32_t Game::GetMultiple(int32_t fan_type)
 //
 //游戏通用管理类
 //
+//佳木斯：12张牌无东南西北发白（只有红中）
+//
 bool GameManager::Load()
 {
 	std::unordered_set<pb::Message*> messages = AssetInstance.GetMessagesByType(Asset::ASSET_TYPE_MJ_CARD);
@@ -1849,7 +1851,8 @@ bool GameManager::Load()
 		Asset::MJCard* asset_card = dynamic_cast<Asset::MJCard*>(message); 
 		if (!asset_card) return false;
 
-		static std::set<int32_t> _valid_cards = { Asset::CARD_TYPE_WANZI, Asset::CARD_TYPE_BINGZI, Asset::CARD_TYPE_TIAOZI, Asset::CARD_TYPE_FENG, Asset::CARD_TYPE_JIAN }; 
+		static std::set<int32_t> _valid_cards = { Asset::CARD_TYPE_WANZI, Asset::CARD_TYPE_BINGZI, Asset::CARD_TYPE_TIAOZI, 
+			/*Asset::CARD_TYPE_FENG, */Asset::CARD_TYPE_JIAN }; 
 
 		auto it = _valid_cards.find(asset_card->card_type());
 		if (it == _valid_cards.end()) continue;
@@ -1863,6 +1866,8 @@ bool GameManager::Load()
 				Asset::PaiElement card;
 				card.set_card_type(asset_card->card_type());
 				card.set_card_value(asset_card->cards(i).value());
+
+				if (Asset::CARD_TYPE_JIAN == asset_card->card_type() && asset_card->cards(i).value() != 1) continue; //只有红中
 
 				if (k == 0) _pais.push_back(card); //每张牌存一个
 				_cards.emplace(_cards.size() + 1, card); //从1开始的索引
