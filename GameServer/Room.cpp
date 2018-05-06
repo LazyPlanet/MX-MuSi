@@ -479,6 +479,11 @@ bool Room::HasLaw(Asset::ROOM_EXTEND_TYPE type)
 		return false; //营口流局,杠依然算分
 	}
 
+	if (city_type != Asset::CITY_TYPE_JIAMUSI && type == Asset::ROOM_EXTEND_TYPE_ZHUANGJIABEI)
+	{
+		return true; //佳木斯，庄不一定算番
+	}
+
 	auto it = std::find(_stuff.options().extend_type().begin(), _stuff.options().extend_type().end(), type);
 	if (it == _stuff.options().extend_type().end()) return false; //常规规则检查
 
@@ -513,6 +518,11 @@ bool Room::HasBaopai()
 bool Room::HasZhang28()
 {
 	return HasLaw(Asset::ROOM_EXTEND_TYPE_28ZUOZHANG);
+}
+
+bool Room::HasZhuangDouble()
+{
+	return HasLaw(Asset::ROOM_EXTEND_TYPE_ZHUANGJIABEI);
 }
 
 //

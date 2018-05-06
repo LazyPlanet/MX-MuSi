@@ -852,7 +852,7 @@ void Game::Calculate(int64_t hupai_player_id/*胡牌玩家*/, int64_t dianpao_pl
 	//
 	int32_t juetou_count = hu_player->GetJueTouHuiCount();
 
-	if (IsBanker(hupai_player_id)) 
+	if (IsBanker(hupai_player_id) && _room->HasZhuangDouble()) //庄家
 	{
 		fan_list.emplace(Asset::FAN_TYPE_ZHUANG);
 	}
@@ -963,7 +963,7 @@ void Game::Calculate(int64_t hupai_player_id/*胡牌玩家*/, int64_t dianpao_pl
 		//
 		//庄家
 		//
-		if (IsBanker(player_id)) 
+		if (IsBanker(player_id) && _room->HasZhuangDouble()) 
 		{
 			score *= GetMultiple(Asset::FAN_TYPE_ZHUANG); 
 			

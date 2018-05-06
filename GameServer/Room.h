@@ -70,9 +70,11 @@ public:
 	int32_t GetMultiple(int32_t fan_type);
 	int32_t MaxFan() { return _stuff.options().top_mutiple(); }
 	Asset::CITY_TYPE GetCity() { return _stuff.options().city_type(); } //城市玩法
+
 	bool IsChaoYang() { return _stuff.options().city_type() == Asset::CITY_TYPE_CHAOYANG; }
 	bool IsJianPing() { return _stuff.options().city_type() == Asset::CITY_TYPE_JIANPING; }
 	bool IsYingKou() { return _stuff.options().city_type() == Asset::CITY_TYPE_YINGKOU; }
+	bool IsJiaMuSi() { return _stuff.options().city_type() == Asset::CITY_TYPE_JIAMUSI; }
 
 	bool HasLaw(Asset::ROOM_EXTEND_TYPE type); //支持玩法
 	bool HasAnbao(); //是否暗包
@@ -93,6 +95,7 @@ public:
 	bool HasHuiPai(); //是否带会儿
 	bool HasJueTouHui(); //是否带绝头会儿
 	bool HasQiDui(); //是否带7对
+	bool HasZhuangDouble(); //是否庄加倍
 
 	bool IsVoiceOpen() { return _stuff.options().voice_open(); }
 
