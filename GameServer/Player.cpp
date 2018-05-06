@@ -2226,10 +2226,18 @@ bool Player::CheckBaoHu(const Asset::PaiElement& pai/*宝牌数据*/)
 
 	if (!IsTingPai()) return false; //没有听牌显然不能胡宝牌
 
-	auto baopai = _game->GetBaoPai();
-	if (pai.card_type() != baopai.card_type() || pai.card_value() != baopai.card_value())  return false; //不是宝牌
-	
 	if (!_room->HasAnbao() && !_room->HasBaopai()) return false;
+	
+	const auto& baopai = _game->GetBaoPai();
+
+	if (pai.card_type() != baopai.card_type() || pai.card_value() != baopai.card_value()) 
+	{
+		if (!_room->HasJiaBao()) return false; //是否支持假宝
+
+		if (pai.card_type() == Asset::CARD_TYPE_JIAN && pai.card_type() == Asset::CARD_TYPE_FENG) return false; //风牌、箭牌不能是假宝
+			
+		if (pai.card_value() != baopai.card_value()) return false; //不是假宝
+	}
 
 	if (_cards_hu.size() == 0) return false; //尚不能胡牌
 
@@ -2631,6 +2639,8 @@ bool Player::CheckHuPai(const std::map<int32_t, std::vector<int32_t>>& cards_inh
 		}
 
 	} while(false);
+
+	if (!jiahu && _room->HasBuJiaBuHu()) return false; //不夹不胡
 
 	if (bianhu) _fan_list.emplace(Asset::FAN_TYPE_JIA_HU_NORMAL); //边胡
 	if (jiahu) _fan_list.emplace(Asset::FAN_TYPE_JIA_HU_NORMAL); //夹胡

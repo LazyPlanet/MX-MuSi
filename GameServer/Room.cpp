@@ -483,6 +483,11 @@ bool Room::HasLaw(Asset::ROOM_EXTEND_TYPE type)
 	{
 		return true; //佳木斯，庄不一定算番
 	}
+	
+	if (city_type == Asset::CITY_TYPE_JIAMUSI && type == Asset::ROOM_EXTEND_TYPE_JIAHU)
+	{
+		return true; //佳木斯，带夹胡
+	}
 
 	auto it = std::find(_stuff.options().extend_type().begin(), _stuff.options().extend_type().end(), type);
 	if (it == _stuff.options().extend_type().end()) return false; //常规规则检查
@@ -518,11 +523,6 @@ bool Room::HasBaopai()
 bool Room::HasZhang28()
 {
 	return HasLaw(Asset::ROOM_EXTEND_TYPE_28ZUOZHANG);
-}
-
-bool Room::HasZhuangDouble()
-{
-	return HasLaw(Asset::ROOM_EXTEND_TYPE_ZHUANGJIABEI);
 }
 
 //
@@ -600,7 +600,50 @@ bool Room::HasBaoSanJia()
 {
 	return HasLaw(Asset::ROOM_EXTEND_TYPE_BAOSANJIA);
 }
+
+bool Room::HasZhuangDouble()
+{
+	return HasLaw(Asset::ROOM_EXTEND_TYPE_ZHUANGJIABEI);
+}
+
+bool Room::HasGuaDaFeng()
+{
+	return HasLaw(Asset::ROOM_EXTEND_TYPE_GUADAFENG);
+}
+
+bool Room::HasJiaBao()
+{
+	return HasLaw(Asset::ROOM_EXTEND_TYPE_JIABAO);
+}
+
+bool Room::HasBuJiaBuHu()
+{
+	return HasLaw(Asset::ROOM_EXTEND_TYPE_BUJIABUHU);
+}
+
+bool Room::HasManTianFei()
+{
+	return HasLaw(Asset::ROOM_EXTEND_TYPE_MANTIANFEI);
+}
+
+bool Room::HasGangPai()
+{
+	return HasLaw(Asset::ROOM_EXTEND_TYPE_DAIGANG);
+}
+
+bool Room::HasKaiPaiZha()
+{
+	return HasLaw(Asset::ROOM_EXTEND_TYPE_KAIPAIZHA);
+}
+
+bool Room::HasDuiBao()
+{
+	return HasLaw(Asset::ROOM_EXTEND_TYPE_DUIBAO);
+}
 	
+//
+//获取番数
+//
 int32_t Room::GetMultiple(int32_t fan_type)
 {
 	const auto fan_asset = GetFan();

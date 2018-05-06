@@ -96,6 +96,13 @@ public:
 	bool HasJueTouHui(); //是否带绝头会儿
 	bool HasQiDui(); //是否带7对
 	bool HasZhuangDouble(); //是否庄加倍
+	bool HasGuaDaFeng(); //是否支持刮大风
+	bool HasJiaBao(); //是否支持假宝
+	bool HasBuJiaBuHu(); //是否支持不夹不胡
+	bool HasManTianFei(); //是否支持红中满天飞
+	bool HasGangPai(); //是否支持杠加分
+	bool HasKaiPaiZha(); //是否支持开牌炸
+	bool HasDuiBao(); //是否支持对宝
 
 	bool IsVoiceOpen() { return _stuff.options().voice_open(); }
 
