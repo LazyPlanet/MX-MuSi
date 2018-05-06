@@ -4474,7 +4474,7 @@ bool Player::OnFaPaiCheck(Asset::PaiOperationAlert& alert, Asset::PAI_OPER_TYPE 
 	//
 	static std::set<int32_t> _invalid_opers = { Asset::PAI_OPER_TYPE_CHIPAI, Asset::PAI_OPER_TYPE_PENGPAI, Asset::PAI_OPER_TYPE_XUANFENG_JIAN };
 
-	if (_room->HasKaiPaiZha()) _invalid_opers.emplace(Asset::PAI_OPER_TYPE_FAPAI); //是否支持开牌炸
+	if (!_room->HasKaiPaiZha()) _invalid_opers.emplace(Asset::PAI_OPER_TYPE_FAPAI); //是否支持开牌炸
 
 	if (_invalid_opers.find(oper_reason) == _invalid_opers.end() && ((ShouldDaPai() && CheckZiMo(false)) || CheckBaoHu(_zhuapai)))
 	{
